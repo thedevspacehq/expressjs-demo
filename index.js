@@ -7,16 +7,18 @@ const port = 3001;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello, World!");
 });
 
 app.listen(port, () => {
-  console.log(
-    `Example app listening on port ${port}. Visit http://localhost:${port}`
-  );
+  console.log(`App listening on port ${port}. Visit http://localhost:${port}.`);
 });
 
-app.post("/user", async (req, res) => {
+app.get("/users/:id/post/:slug", (req, res) => {
+  res.send(req.params);
+});
+
+app.post("/user", (req, res) => {
   const { username, email } = req.body;
   User.createUser(username, email, (err, newUser) => {
     if (err) {
