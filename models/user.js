@@ -1,71 +1,52 @@
-import db from "../libs/sqlite.js";
+import db from "../libs/db.js";
 
 class User {
-  constructor(id, name, description) {
+  constructor(id, username, email) {
     this.id = id;
-    this.name = name;
-    this.description = description;
+    this.username = username;
+    this.email = email;
   }
 
+  // Fetch all users from the database
   static getAll(callback) {
     const sql = "SELECT * FROM users";
-    db.all(sql, (err, users) => {
-      if (err) {
-        callback(err, null);
-        return;
-      }
-      const users = users.map(
-        (user) => new User(user.id, user.name, user.description)
+    db.all(sql, (err, rows) => {
+      const users = rows.map(
+        (row) => new User(row.id, row.username, row.email)
       );
       callback(null, users);
     });
   }
 
+  // Fetch a user by ID from the database
   static getById(id, callback) {
     const sql = "SELECT * FROM users WHERE id = ?";
-    db.get(sql, [id], (err, user) => {
-      if (err) {
-        callback(err, null);
-        return;
-      }
-      if (!user) {
-        callback({ message: "User not found" }, null);
-        return;
-      }
-      const user = new User(user.id, user.name, user.description);
+    db.get(sql, [id], (err, row) => {
+      const user = new User(row.id, row.username, row.email);
       callback(null, user);
     });
   }
 
-  static create(name, description, callback) {
-    const sql = "INSERT INTO users (name, description) VALUES (?, ?)";
-    db.run(sql, [name, description], function (err) {
-      if (err) {
-        callback(err, null);
-        return;
-      }
+  // Insert a new user into the database
+  static create(username, email, callback) {
+    const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
+    db.run(sql, [username, email], (err) => {
       callback(null, this.lastID);
     });
   }
 
-  static update(id, name, description, callback) {
-    const sql = "UPDATE users SET name = ?, description = ? WHERE id = ?";
-    db.run(sql, [name, description, id], function (err) {
-      if (err) {
-        callback(err);
-        return;
-      }
+  // Update an existing user in the database
+  static update(id, username, email, callback) {
+    const sql = "UPDATE users SET username = ?, email = ? WHERE id = ?";
+    db.run(sql, [username, email, id], function (err) {
       callback(null);
     });
   }
 
+  // Delete a user from the database
   static delete(id, callback) {
     const sql = "DELETE FROM users WHERE id = ?";
     db.run(sql, [id], function (err) {
-      if (err) {
-        callback(err);
-        return;
-      }
       callback(null);
     });
   }

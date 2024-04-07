@@ -9,33 +9,46 @@ app.use("/dashboard", dashboardRouter);
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
+// Get all users
+app.get("/users", (req, res) => {
+  User.getAll((err, users) => {
+    res.json(users);
+  });
 });
 
-// app.get("/users/:id", (req, res) => {
-//   res.send(`Show user profile for ${req.params.id}`);
-// });
-
-app.post("/users/:id", (req, res) => {
-  // Retrieve user info from database based on id
-  res.send(`<p>Create new user ${req.params.id}</p>`);
+// Get a single user by ID
+app.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+  User.getById(id, (err, user) => {
+    res.json(user);
+  });
 });
 
-// app.delete("/users/:id", (req, res) => {
-//   res.send(`Delete user ${req.params.id}`);
-// });
+// Create a new user
+app.post("/users", (req, res) => {
+  const { username, email } = req.body;
+  User.create(username, email, (err, userId) => {
+    res.status(201).json({ id: userId, message: "User created successfully" });
+  });
+});
+
+// Update an existing user
+app.put("/users/:id", (req, res) => {
+  const id = req.params.id;
+  const { username, email } = req.body;
+  User.update(id, username, email, () => {
+    res.json({ message: "User updated successfully" });
+  });
+});
+
+// Delete a user
+app.delete("/users/:id", (req, res) => {
+  const id = req.params.id;
+  User.delete(id, () => {
+    res.json({ message: "User deleted successfully" });
+  });
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}. Visit http://localhost:${port}.`);
 });
-
-// app.post("/user", (req, res) => {
-//   const { username, email } = req.body;
-//   User.createUser(username, email, (err, newUser) => {
-//     if (err) {
-//       return res.status(500).json({ error: err.message });
-//     }
-//     res.status(201).json(newUser);
-//   });
-// });
