@@ -1,5 +1,15 @@
 import db from "../libs/db.js";
 
+db.serialize(() => {
+  db.run(
+    `CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT,
+      email TEXT
+    )`
+  );
+});
+
 class User {
   constructor(id, username, email) {
     this.id = id;
