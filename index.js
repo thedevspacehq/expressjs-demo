@@ -9,6 +9,13 @@ app.use("/dashboard", dashboardRouter);
 
 app.use(express.json());
 
+app.set("views", "./views");
+app.set("view engine", "pug");
+
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 // Get all users
 app.get("/users", (req, res) => {
   User.getAll((err, users) => {
