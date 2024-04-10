@@ -1,6 +1,7 @@
 import express from "express";
-import User from "./models/user.js";
+import User from "../models/user.js";
 import dashboardRouter from "./routes/dashboard.js";
+import { userController } from "../controllers/userController.js";
 
 const app = express();
 const port = 3001;
@@ -24,12 +25,7 @@ app.get("/users", (req, res) => {
 });
 
 // Get a single user by ID
-app.get("/users/:id", (req, res) => {
-  const id = req.params.id;
-  User.getById(id, (err, user) => {
-    res.json(user);
-  });
-});
+app.get("/users/:id", userController.getUserById);
 
 // Create a new user
 app.post("/users", (req, res) => {

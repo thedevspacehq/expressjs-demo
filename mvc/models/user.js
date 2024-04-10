@@ -31,6 +31,7 @@ class User {
   // Fetch a user by ID from the database
   static getById(id, callback) {
     const sql = "SELECT * FROM users WHERE id = ?";
+    console.log(id);
     db.get(sql, [id], (err, row) => {
       const user = new User(row.id, row.username, row.email);
       callback(null, user);
