@@ -1,7 +1,7 @@
 import express from "express";
-import User from "../models/user.js";
+import User from "./models/user.js";
 import dashboardRouter from "./routes/dashboard.js";
-import { userController } from "../controllers/userController.js";
+import userController from "./controllers/userController.js";
 
 const app = express();
 const port = 3001;

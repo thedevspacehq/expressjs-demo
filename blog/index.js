@@ -8,6 +8,9 @@ const port = 3001;
 app.set("views", "./views");
 app.set("view engine", "pug");
 
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.get("/", postController.getAllPosts);
 app.use("/posts", postRouter);
 

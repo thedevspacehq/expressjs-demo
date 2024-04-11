@@ -25,7 +25,8 @@ const postController = {
   createPost: async function (req, res) {
     const { title, content } = req.body;
     Post.create(title, content, (err, postID) => {
-      res.redirect(`/post/${postID}`);
+      console.log(postID);
+      res.redirect(`/posts/${postID}`);
     });
   },
 

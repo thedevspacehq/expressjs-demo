@@ -38,7 +38,8 @@ class Post {
   // Insert a new post into the database
   static create(title, content, callback) {
     const sql = "INSERT INTO posts (title, content) VALUES (?, ?)";
-    db.run(sql, [title, content], (err) => {
+    db.run(sql, [title, content], function (err) {
+      console.log(this.lastID);
       callback(null, this.lastID);
     });
   }
