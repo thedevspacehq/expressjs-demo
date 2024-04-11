@@ -1,6 +1,4 @@
-import sqlite3 from "sqlite3";
-
-const db = new sqlite3.Database("./database.sqlite");
+import db from "../utils/db.js";
 
 db.serialize(() => {
   db.run(

@@ -1,4 +1,4 @@
-import Post from "../models/post";
+import Post from "../models/post.js";
 
 const postController = {
   getAllPosts: async function (req, res) {
@@ -19,7 +19,7 @@ const postController = {
   },
 
   newPost: async function (req, res) {
-    res.render("/post/new");
+    res.render("post/new");
   },
 
   createPost: async function (req, res) {
@@ -30,7 +30,7 @@ const postController = {
   },
 
   editPost: async function (req, res) {
-    res.render("/post/edit");
+    res.render("post/edit");
   },
 
   updatePost: async function (req, res) {},

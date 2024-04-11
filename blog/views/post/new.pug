@@ -1,0 +1,10 @@
+extends ../layout.pug
+
+block meta
+    title Create New Post 
+
+block content
+    form(action="/posts/new", method="post") 
+        input(type="text", name="title")
+        textarea(name="content", cols="30", rows="10") 
+        input(type="submit", value="Submit")
