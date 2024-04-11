@@ -31,7 +31,6 @@ export default class Post {
   // Fetch a post by ID from the database
   static getById(id, callback) {
     const sql = "SELECT * FROM posts WHERE id = ?";
-    console.log(id);
     db.get(sql, [id], (err, row) => {
       const post = new Post(row.id, row.title, row.content);
       callback(null, post);
