@@ -1,6 +1,6 @@
 import Post from "../models/post";
 
-export const postController = {
+const postController = {
   getAllPosts: async function (req, res) {
     Post.getAll((err, posts) => {
       res.render("index", {
@@ -17,4 +17,25 @@ export const postController = {
       });
     });
   },
+
+  newPost: async function (req, res) {
+    res.render("/post/new");
+  },
+
+  createPost: async function (req, res) {
+    const { title, content } = req.body;
+    Post.create(title, content, (err, postID) => {
+      res.redirect(`/post/${postID}`);
+    });
+  },
+
+  editPost: async function (req, res) {
+    res.render("/post/edit");
+  },
+
+  updatePost: async function (req, res) {},
+
+  deletePost: async function (req, res) {},
 };
+
+export default postController;

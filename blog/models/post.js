@@ -12,7 +12,7 @@ db.serialize(() => {
   );
 });
 
-export default class Post {
+class Post {
   constructor(id, title, content) {
     this.id = id;
     this.title = title;
@@ -61,3 +61,5 @@ export default class Post {
     });
   }
 }
+
+export default Post;
