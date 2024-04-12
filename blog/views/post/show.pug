@@ -1,0 +1,10 @@
+extends ../layout.pug
+
+block meta
+    title #{post.title}
+
+block content
+    h1 #{post.title}
+    div #{post.content}
+
+    a(href=`/posts/edit/${post.id}`) Edit this post

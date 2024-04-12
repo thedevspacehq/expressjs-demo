@@ -31,12 +31,27 @@ const postController = {
   },
 
   editPost: async function (req, res) {
-    res.render("post/edit");
+    const id = req.params.id;
+    Post.getById(id, (err, post) => {
+      res.render("post/edit", {
+        post,
+      });
+    });
   },
 
-  updatePost: async function (req, res) {},
+  updatePost: async function (req, res) {
+    const { title, content } = req.body;
+    console.log(req.body);
+    Post.update(req.params.id, title, content, (err, postID) => {
+      res.redirect(`/posts/${postID}`);
+    });
+  },
 
-  deletePost: async function (req, res) {},
+  deletePost: async function (req, res) {
+    Post.delete(req.params.id, (err) => {
+      res.redirect("/");
+    });
+  },
 };
 
 export default postController;
