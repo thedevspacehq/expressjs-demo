@@ -41,9 +41,12 @@ router
 
 router
   .route("/:id")
-  .get((req, res) => {
-    res.send(`Showing details of user ${req.params.id}`);
-  })
+  .get(
+    // (req, res) => {
+    //   res.send(`Showing details of user ${req.params.id}`);
+    // }
+    userController.getUserById
+  )
   .put((req, res) => {
     res.send(`Update user ${req.params.id}`);
   })

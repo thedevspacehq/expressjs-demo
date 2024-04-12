@@ -7,7 +7,7 @@ const port = 3001;
 app.use(express.json()); // MIddleware that allows Express to parse request body in JSON
 
 app.set("views", "./views"); // Defines the location of the view templates
-app.set("view engine", "pug"); // Defined the template engine
+app.set("view engine", "pug"); // Defines the template engine
 
 // The homepage
 app.get("/", (req, res) => {

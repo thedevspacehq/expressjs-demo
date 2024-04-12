@@ -38,12 +38,6 @@ class User {
   }
 
   // Insert a new user into the database
-  // static create(username, email, callback) {
-  //   const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
-  //   db.run(sql, [username, email], (err) => {
-  //     callback(null, this.lastID);
-  //   });
-  // }
   static create(username, email, callback) {
     const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
     db.run(sql, [username, email], function (err) {
