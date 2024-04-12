@@ -31,7 +31,6 @@ class User {
   // Fetch a user by ID from the database
   static getById(id, callback) {
     const sql = "SELECT * FROM users WHERE id = ?";
-    console.log(id);
     db.get(sql, [id], (err, row) => {
       const user = new User(row.id, row.username, row.email);
       callback(null, user);
@@ -39,9 +38,15 @@ class User {
   }
 
   // Insert a new user into the database
+  // static create(username, email, callback) {
+  //   const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
+  //   db.run(sql, [username, email], (err) => {
+  //     callback(null, this.lastID);
+  //   });
+  // }
   static create(username, email, callback) {
     const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
-    db.run(sql, [username, email], (err) => {
+    db.run(sql, [username, email], function (err) {
       callback(null, this.lastID);
     });
   }
