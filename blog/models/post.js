@@ -1,4 +1,4 @@
-import db from "../utils/db.js";
+import db from "../libs/db.js";
 
 db.serialize(() => {
   db.run(
