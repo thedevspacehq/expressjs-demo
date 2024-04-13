@@ -1,5 +1,4 @@
 import express from "express";
-import userRouter from "./routes/users.js";
 
 const app = express();
 const port = 3001;
@@ -15,7 +14,6 @@ app.get("/", (req, res) => {
 });
 
 // The user routes
-app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}. Visit http://localhost:${port}.`);
