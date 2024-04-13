@@ -1,7 +1,8 @@
-doctype html
-html
-  head
-    title User
-  body
-    p Username: #{user.username}
-    p Email: #{user.email}
+extends layout.pug 
+
+block meta
+  title User #{user.username}
+
+block content 
+  p Username: #{user.username}
+  p Email: #{user.email}

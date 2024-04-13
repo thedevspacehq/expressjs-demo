@@ -4,4 +4,40 @@ block meta
   title Home
 
 block content 
-  form(action="/users", method="post") 
+
+  form(id="myForm")
+    label(for="username") Username:
+    input(type="text", name="username", id="username", value="")
+    label(for="email") Email:
+    input(type="email", name="email", id="email", value="")
+    input(type="submit", value="Submit")
+
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('myForm');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+
+        const formData = new URLSearchParams();
+
+        usernameInput.addEventListener('input', function() {
+            formData.set('username', usernameInput.value);
+        });
+
+        emailInput.addEventListener('input', function() {
+            formData.set('email', emailInput.value);
+        });
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            await fetch('/users', {
+                method: 'POST',
+                body: formData.toString(),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+        });
+    });
+
