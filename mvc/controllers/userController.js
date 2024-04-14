@@ -12,12 +12,19 @@ const userController = {
   getAllUsers: async function (req, res) {},
   createNewUser: async function (req, res) {
     const { username, email } = req.body;
-    console.log(req.body);
+
     User.create(username, email, (err, userID) => {
-      res.redirect(`/users/${userID}`);
+      res.redirect(303, `/users/${userID}`);
     });
   },
-  updateUser: async function (req, res) {},
+  updateUser: async function (req, res) {
+    const { username, email } = req.body;
+    console.log(req.body);
+
+    User.update(req.params.id, username, email, (err, userID) => {
+      res.redirect(303, `/users/${userID}`);
+    });
+  },
   deleteUser: async function (req, res) {},
 };
 
