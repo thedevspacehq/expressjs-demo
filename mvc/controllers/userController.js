@@ -1,14 +1,4 @@
 import User from "../models/user.js";
-import multer from "multer";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, "uploads/"); // Save files to the 'uploads' directory
-  },
-  filename: function (req, file, callback) {
-    callback(null, Date.now() + "-" + file.originalname); // Add a timestamp to the filename to make it unique
-  },
-});
 
 const userController = {
   getUserById: async function (req, res) {
@@ -22,10 +12,9 @@ const userController = {
   getAllUsers: async function (req, res) {},
   createNewUser: async function (req, res) {
     const { username, email } = req.body;
-    const filePath = req;
-    console.log("File Path:", filePath);
+    const file = req.file;
 
-    User.create(username, email, filePath, (err, userID) => {
+    User.create(username, email, file.path, (err, userID) => {
       res.redirect(303, `/users/${userID}`);
     });
   },

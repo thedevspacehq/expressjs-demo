@@ -25,20 +25,14 @@ block content
 
         usernameInput.addEventListener('input', function() {
             formData.set('username', usernameInput.value);
-            //- for (const pair of formData.entries()) {
-            //-   console.log(pair[0], pair[1]);
-            //- }
         });
 
         emailInput.addEventListener('input', function() {
             formData.set('email', emailInput.value);
         });
 
-        pictureInput.addEventListener('change', function() { // Listen for file change
-            formData.set('picture', pictureInput.files[0]); // Set the file in FormData
-            for (const pair of formData.entries()) {
-              console.log(pair[0], pair[1]);
-            }
+        pictureInput.addEventListener('change', function() {
+            formData.set('picture', pictureInput.files[0]);
         });
 
         form.addEventListener('submit', async function(event) {
@@ -47,9 +41,6 @@ block content
             await fetch('/users', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
             })
         });
     });

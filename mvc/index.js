@@ -1,5 +1,17 @@
 import express from "express";
 import userController from "./controllers/userController.js";
+import multer from "multer";
+
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "uploads/");
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const app = express();
 const port = 3001;
@@ -19,7 +31,7 @@ app.get("/", (req, res) => {
 app
   .route("/users")
   .get(userController.getAllUsers) // Omitted in this lesson
-  .post(userController.createNewUser);
+  .post(upload.single("picture"), userController.createNewUser);
 
 app
   .route("/users/:id")
