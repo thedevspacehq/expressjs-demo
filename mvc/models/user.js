@@ -7,7 +7,8 @@ db.serialize(() => {
     `CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT,
-      email TEXT
+      email TEXT,
+      picture TEXT
     )`
   );
 });
@@ -40,9 +41,9 @@ class User {
   }
 
   // Insert a new user into the database
-  static create(username, email, callback) {
-    const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
-    db.run(sql, [username, email], function (err) {
+  static create(username, email, filePath, callback) {
+    const sql = "INSERT INTO users (username, email, picture) VALUES (?, ?, ?)";
+    db.run(sql, [username, email, filePath], function (err) {
       callback(null, this.lastID);
     });
   }

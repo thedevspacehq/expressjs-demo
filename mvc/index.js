@@ -27,6 +27,8 @@ app
   .put(userController.updateUser)
   .delete(userController.deleteUser);
 
+app.route("/upload").get().post();
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}. Visit http://localhost:${port}.`);
 });

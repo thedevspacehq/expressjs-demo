@@ -10,6 +10,8 @@ block content
     input(type="text", name="username", id="username", value="")
     label(for="email") Email:
     input(type="email", name="email", id="email", value="")
+    label(for="picture") Picture: 
+    input(type="file", name="picture", id="picture", value="")
     input(type="submit", value="Submit")
 
   script.
@@ -17,15 +19,26 @@ block content
         const form = document.getElementById('myForm');
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
+        const pictureInput = document.getElementById('picture');
 
-        const formData = new URLSearchParams();
+        const formData = new FormData();
 
         usernameInput.addEventListener('input', function() {
             formData.set('username', usernameInput.value);
+            //- for (const pair of formData.entries()) {
+            //-   console.log(pair[0], pair[1]);
+            //- }
         });
 
         emailInput.addEventListener('input', function() {
             formData.set('email', emailInput.value);
+        });
+
+        pictureInput.addEventListener('change', function() { // Listen for file change
+            formData.set('picture', pictureInput.files[0]); // Set the file in FormData
+            for (const pair of formData.entries()) {
+              console.log(pair[0], pair[1]);
+            }
         });
 
         form.addEventListener('submit', async function(event) {
@@ -33,9 +46,9 @@ block content
 
             await fetch('/users', {
                 method: 'POST',
-                body: formData.toString(),
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'multipart/form-data'
                 }
             })
         });
