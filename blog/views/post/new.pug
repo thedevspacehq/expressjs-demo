@@ -43,6 +43,6 @@ block content
                 await fetch('/posts/new', {
                     method: 'POST',
                     body: formData,
-                })
+                }).then(data => window.location.href = data.url);
             });
         });

@@ -50,7 +50,6 @@ const postController = {
   },
 
   deletePost: async function (req, res) {
-    console.log(req.params.id);
     Post.delete(req.params.id, (err) => {
       res.redirect("/");
     });

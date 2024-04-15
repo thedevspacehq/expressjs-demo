@@ -51,7 +51,7 @@ block content
                 await fetch(`/posts/edit/${postID}`, {
                     method: 'PUT',
                     body: formData,
-                })
+                }).then(data => window.location.href = data.url)
             });
 
             const deleteForm = document.getElementById('deletePost');
@@ -64,6 +64,6 @@ block content
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
-                })
+                }).then(data => window.location.href = data.url)
             });
         });
