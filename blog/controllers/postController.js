@@ -24,8 +24,9 @@ const postController = {
 
   createPost: async function (req, res) {
     const { title, content } = req.body;
-    Post.create(title, content, (err, postID) => {
-      console.log(postID);
+    const picture = req.file;
+
+    Post.create(title, content, picture, (err, postID) => {
       res.redirect(`/posts/${postID}`);
     });
   },
@@ -41,13 +42,15 @@ const postController = {
 
   updatePost: async function (req, res) {
     const { title, content } = req.body;
-    console.log(req.body);
-    Post.update(req.params.id, title, content, (err, postID) => {
+    const picture = req.file;
+
+    Post.update(req.params.id, title, content, picture, (err, postID) => {
       res.redirect(`/posts/${postID}`);
     });
   },
 
   deletePost: async function (req, res) {
+    console.log(req.params.id);
     Post.delete(req.params.id, (err) => {
       res.redirect("/");
     });
