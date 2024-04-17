@@ -11,6 +11,8 @@ app.set("view engine", "pug");
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+app.use("/uploads", express.static("uploads"));
+
 app.get("/", postController.getAllPosts);
 app.use("/posts", postRouter);
 

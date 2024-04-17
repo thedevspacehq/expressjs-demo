@@ -4,6 +4,7 @@ block meta
     title #{post.title}
 
 block content
+    img(src=`/${post.picture}`, alt="", srcset="")
     h1 #{post.title}
     div #{post.content}
 
