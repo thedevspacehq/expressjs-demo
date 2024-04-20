@@ -1,20 +1,23 @@
-import prisma from "../libs/prisma";
+import prisma from "../libs/prisma.js";
 
 const postController = {
   list: async function (req, res) {
-    Post.getAll((err, posts) => {
-      res.render("index", {
-        posts,
-      });
+    const posts = await prisma.post.findMany();
+
+    res.render("index", {
+      posts,
     });
   },
 
   show: async function (req, res) {
-    const id = req.params.id;
-    Post.getById(id, (err, post) => {
-      res.render("post/show", {
-        post,
-      });
+    const post = await prisma.post.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+
+    res.render("post/show", {
+      post,
     });
   },
 
@@ -24,35 +27,69 @@ const postController = {
 
   create: async function (req, res) {
     const { title, content } = req.body;
-    const picture = req.file;
+    const image = req.file;
 
-    Post.create(title, content, picture, (err, postID) => {
-      res.redirect(`/posts/${postID}`);
+    const post = await prisma.post.create({
+      data: {
+        title: title,
+        content: content,
+        image: image.path,
+      },
     });
+
+    res.redirect(`/posts/${post.id}`);
   },
 
   edit: async function (req, res) {
-    const id = req.params.id;
-    Post.getById(id, (err, post) => {
-      res.render("post/edit", {
-        post,
-      });
+    const post = await prisma.post.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+
+    res.render("post/edit", {
+      post,
     });
   },
 
   update: async function (req, res) {
     const { title, content } = req.body;
-    const picture = req.file;
+    const image = req.file;
 
-    Post.update(req.params.id, title, content, picture, (err, postID) => {
-      res.redirect(`/posts/${postID}`);
-    });
+    if (image) {
+      const post = await prisma.post.update({
+        where: {
+          id: Number(req.params.id),
+        },
+        data: {
+          title: title,
+          content: content,
+          image: image.path,
+        },
+      });
+      res.redirect(`/posts/${post.id}`);
+    } else {
+      const post = await prisma.post.update({
+        where: {
+          id: Number(req.params.id),
+        },
+        data: {
+          title: title,
+          content: content,
+        },
+      });
+      res.redirect(`/posts/${post.id}`);
+    }
   },
 
   delete: async function (req, res) {
-    Post.delete(req.params.id, (err) => {
-      res.redirect("/");
+    const post = await prisma.post.delete({
+      where: {
+        id: Number(req.params.id),
+      },
     });
+
+    res.redirect("/");
   },
 };
 

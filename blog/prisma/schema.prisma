@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
+  id    Int     @id @default(autoincrement()) // This works
+  email String  @unique                       // This works
+  name  String                                // This does not work
 }
 
 model Post {

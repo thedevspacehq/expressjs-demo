@@ -1,5 +1,6 @@
 import express from "express";
 import postRouter from "./routes/post.js";
+import userRouter from "./routes/user.js";
 import postController from "./controllers/postController.js";
 
 const app = express();
@@ -16,6 +17,7 @@ app.use("/statics", express.static("statics"));
 
 app.get("/", postController.list);
 app.use("/posts", postRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log(
