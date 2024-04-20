@@ -1,7 +1,7 @@
 import Post from "../models/post.js";
 
 const postController = {
-  getAllPosts: async function (req, res) {
+  list: async function (req, res) {
     Post.getAll((err, posts) => {
       res.render("index", {
         posts,
@@ -9,7 +9,7 @@ const postController = {
     });
   },
 
-  getPostById: async function (req, res) {
+  show: async function (req, res) {
     const id = req.params.id;
     Post.getById(id, (err, post) => {
       res.render("post/show", {
@@ -18,11 +18,11 @@ const postController = {
     });
   },
 
-  newPost: async function (req, res) {
+  new: async function (req, res) {
     res.render("post/new");
   },
 
-  createPost: async function (req, res) {
+  create: async function (req, res) {
     const { title, content } = req.body;
     const picture = req.file;
 
@@ -31,7 +31,7 @@ const postController = {
     });
   },
 
-  editPost: async function (req, res) {
+  edit: async function (req, res) {
     const id = req.params.id;
     Post.getById(id, (err, post) => {
       res.render("post/edit", {
@@ -40,7 +40,7 @@ const postController = {
     });
   },
 
-  updatePost: async function (req, res) {
+  update: async function (req, res) {
     const { title, content } = req.body;
     const picture = req.file;
 
@@ -49,7 +49,7 @@ const postController = {
     });
   },
 
-  deletePost: async function (req, res) {
+  delete: async function (req, res) {
     Post.delete(req.params.id, (err) => {
       res.redirect("/");
     });

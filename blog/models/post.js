@@ -53,12 +53,12 @@ class Post {
       const sql =
         "UPDATE posts SET title = ?, content = ?, picture = ? WHERE id = ?";
       db.run(sql, [title, content, picture.path, id], function (err) {
-        callback(null);
+        callback(null, this.lastID);
       });
     } else {
       const sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
       db.run(sql, [title, content, id], function (err) {
-        callback(null);
+        callback(null, this.lastID);
       });
     }
   }

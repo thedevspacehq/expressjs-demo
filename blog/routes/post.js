@@ -17,15 +17,15 @@ const postRouter = Router();
 
 postRouter
   .route("/new")
-  .get(postController.newPost)
-  .post(upload.single("picture"), postController.createPost);
+  .get(postController.new)
+  .post(upload.single("picture"), postController.create);
 
 postRouter
   .route("/edit/:id")
-  .get(postController.editPost)
-  .put(upload.single("picture"), postController.updatePost)
-  .delete(postController.deletePost);
+  .get(postController.edit)
+  .put(upload.single("picture"), postController.update)
+  .delete(postController.delete);
 
-postRouter.route("/:id").get(postController.getPostById);
+postRouter.route("/:id").get(postController.show);
 
 export default postRouter;

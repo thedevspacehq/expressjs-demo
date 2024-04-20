@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use("/uploads", express.static("uploads"));
 app.use("/statics", express.static("statics"));
 
-app.get("/", postController.getAllPosts);
+app.get("/", postController.list);
 app.use("/posts", postRouter);
 
 app.listen(port, () => {
