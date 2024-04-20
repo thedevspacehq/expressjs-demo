@@ -1,4 +1,4 @@
-import Post from "../models/post.js";
+import prisma from "../libs/prisma";
 
 const postController = {
   list: async function (req, res) {
