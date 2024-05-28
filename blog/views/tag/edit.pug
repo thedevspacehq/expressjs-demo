@@ -1,56 +1,47 @@
 extends ../layout.pug
 
 block meta
-    title Update User
+    title Update Tag
 
 block content
-    form(id="editUser") 
+    form(id="editTag") 
         label(for="name") Name: 
-        input(type="text", name="name", id="name", value=`${user.name}`)
-
-        label(for="content") Email: 
-        input(type="email", name="email", id="email", value=`${user.email}`)
+        input(type="text", name="name", id="name", value=`${tag.name}`)
 
         input(type="submit", value="Submit")
 
-    form(id="deleteUser")
-        input(type="submit", value="Delete User")
+    form(id="deleteTag")
+        input(type="submit", value="Delete Tag")
 
     script.
-        const userID = JSON.parse("!{JSON.stringify(user.id)}");
+        const tagID = JSON.parse("!{JSON.stringify(tag.id)}");
 
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('editUser');
+            const form = document.getElementById('editTag');
             const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
 
             const formData = new FormData();
             formData.set('name', nameInput.value);
-            formData.set('email', emailInput.value);
 
             nameInput.addEventListener('input', function() {
                 formData.set('name', nameInput.value);
             });
 
-            emailInput.addEventListener('input', function() {
-                formData.set('email', emailInput.value);
-            });
-
             form.addEventListener('submit', async function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
-                await fetch(`/users/edit/${userID}`, {
+                await fetch(`/tags/edit/${tagID}`, {
                     method: 'PUT',
                     body: formData,
                 }).then(data => window.location.href = data.url)
             });
 
-            const deleteForm = document.getElementById('deleteUser');
+            const deleteForm = document.getElementById('deleteTag');
 
             deleteForm.addEventListener('submit', async function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
-                await fetch(`/users/edit/${userID}`, {
+                await fetch(`/tags/edit/${tagID}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'

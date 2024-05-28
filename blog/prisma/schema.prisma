@@ -24,3 +24,8 @@ model Post {
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
 }
+
+model Tag {
+  id          Int      @id @default(autoincrement())
+  name       String
+}
