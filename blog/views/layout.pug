@@ -6,10 +6,19 @@ html
 
     body
         nav
-            a(href="/posts/new") New Post
-            a(href="/tags/new") New Tag
-            a(href="/users/new") New User
-            a(href="/") Home
+            ul 
+                li 
+                    a(href="/posts/new") New Post
+                li 
+                    a(href="/tags/new") New Tag
+                li 
+                    a(href="/users/new") New User
+                li 
+                    a(href="/") Home
+                li 
+                    a(href="/tags") Tags
+                li 
+                    a(href="/users") Users
         block content
         footer
         script(src="/statics/js/app.js") 

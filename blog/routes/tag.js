@@ -3,6 +3,8 @@ import tagController from "../controllers/tagController.js";
 
 const tagRouter = Router();
 
+tagRouter.route("/").get(tagController.list);
+
 tagRouter.route("/new").get(tagController.new).post(tagController.create);
 
 tagRouter

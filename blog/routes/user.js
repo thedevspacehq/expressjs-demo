@@ -3,6 +3,8 @@ import userController from "../controllers/userController.js";
 
 const userRouter = Router();
 
+userRouter.route("/").get(userController.list);
+
 userRouter.route("/new").get(userController.new).post(userController.create);
 
 userRouter
