@@ -18,12 +18,12 @@ const postRouter = Router();
 postRouter
   .route("/new")
   .get(postController.new)
-  .post(upload.single("picture"), postController.create);
+  .post(upload.single("image"), postController.create);
 
 postRouter
   .route("/edit/:id")
   .get(postController.edit)
-  .put(upload.single("picture"), postController.update)
+  .put(upload.single("image"), postController.update)
   .delete(postController.delete);
 
 postRouter.route("/:id").get(postController.show);

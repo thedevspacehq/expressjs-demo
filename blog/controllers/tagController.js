@@ -12,7 +12,7 @@ const tagController = {
   show: async function (req, res) {
     const tag = await prisma.tag.findUnique({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 
@@ -40,7 +40,7 @@ const tagController = {
   edit: async function (req, res) {
     const tag = await prisma.tag.findUnique({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 
@@ -64,7 +64,7 @@ const tagController = {
   delete: async function (req, res) {
     const tag = await prisma.tag.delete({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 

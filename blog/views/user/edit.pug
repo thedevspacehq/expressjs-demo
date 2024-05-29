@@ -24,7 +24,7 @@ block content
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
 
-            const formData = new FormData();
+            const formData = new URLSearchParams();
             formData.set('name', nameInput.value);
             formData.set('email', emailInput.value);
 
@@ -41,7 +41,10 @@ block content
 
                 await fetch(`/users/edit/${userID}`, {
                     method: 'PUT',
-                    body: formData,
+                    body: formData.toString(),
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
                 }).then(data => window.location.href = data.url)
             });
 

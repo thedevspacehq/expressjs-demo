@@ -12,7 +12,7 @@ const userController = {
   show: async function (req, res) {
     const user = await prisma.user.findUnique({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 
@@ -26,14 +26,12 @@ const userController = {
   },
 
   create: async function (req, res) {
-    const { title, content } = req.body;
-    const picture = req.file;
+    const { name, email } = req.body;
 
     const user = await prisma.user.create({
       data: {
-        title: title,
-        content: content,
-        picture: picture.path,
+        name: name,
+        email: email,
       },
     });
 
@@ -43,7 +41,7 @@ const userController = {
   edit: async function (req, res) {
     const user = await prisma.user.findUnique({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 
@@ -53,14 +51,12 @@ const userController = {
   },
 
   update: async function (req, res) {
-    const { title, content } = req.body;
-    const picture = req.file;
+    const { name, email } = req.body;
 
     const user = await prisma.user.update({
       data: {
-        title: title,
-        content: content,
-        picture: picture.path,
+        name: name,
+        email: email,
       },
     });
 
@@ -70,7 +66,7 @@ const userController = {
   delete: async function (req, res) {
     const user = await prisma.user.delete({
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
     });
 

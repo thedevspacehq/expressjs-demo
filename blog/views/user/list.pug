@@ -7,6 +7,6 @@ block content
     ul 
     each user in users
       li 
-        a(href=`/users/${user.id}`) #{user.title}
+        a(href=`/users/${user.id}`) #{user.name}
     else
       li No user found.

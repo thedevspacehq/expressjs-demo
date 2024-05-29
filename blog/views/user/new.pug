@@ -19,7 +19,7 @@ block content
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
 
-            const formData = new FormData();
+            const formData = new URLSearchParams();
 
             nameInput.addEventListener('input', function() {
                 formData.set('name', nameInput.value);
@@ -34,7 +34,10 @@ block content
 
                 await fetch('/users/new', {
                     method: 'POST',
-                    body: formData,
+                    body: formData.toString(),
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
                 }).then(data => window.location.href = data.url);
             });
         });
