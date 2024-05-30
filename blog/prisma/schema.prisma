@@ -13,7 +13,9 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement()) 
   email String  @unique                       
-  name  String                                
+  name  String
+
+  posts Post[]
 }
 
 model Post {
@@ -23,9 +25,16 @@ model Post {
   image       String   @default("")
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
+
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int      @default(1)
+
+  tags        Tag[]
 }
 
 model Tag {
-  id          Int      @id @default(autoincrement())
-  name       String
+  id    Int    @id @default(autoincrement())
+  name  String
+
+  posts Post[]
 }
