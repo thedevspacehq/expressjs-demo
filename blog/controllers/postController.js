@@ -2,7 +2,11 @@ import prisma from "../libs/prisma.js";
 
 const postController = {
   list: async function (req, res) {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
 
     res.render("index", {
       posts,
@@ -14,6 +18,10 @@ const postController = {
       where: {
         id: Number(req.params.id),
       },
+      include: {
+        author: true,
+        tags: true,
+      },
     });
 
     res.render("post/show", {
@@ -22,18 +30,36 @@ const postController = {
   },
 
   new: async function (req, res) {
-    res.render("post/new");
+    const authors = await prisma.user.findMany();
+    const tags = await prisma.tag.findMany();
+
+    res.render("post/new", {
+      authors,
+      tags,
+    });
   },
 
   create: async function (req, res) {
-    const { title, content } = req.body;
+    const { title, content, author, tags } = req.body;
     const image = req.file;
+
+    const newTags = tags.split(",").map((element) => {
+      return { id: Number(element) };
+    });
 
     const post = await prisma.post.create({
       data: {
         title: title,
         content: content,
         image: image.path,
+        author: {
+          connect: {
+            id: Number(author),
+          },
+        },
+        tags: {
+          connect: newTags,
+        },
       },
     });
 
@@ -45,16 +71,28 @@ const postController = {
       where: {
         id: Number(req.params.id),
       },
+      include: {
+        author: true,
+      },
     });
+
+    const authors = await prisma.user.findMany();
+    const tags = await prisma.tag.findMany();
 
     res.render("post/edit", {
       post,
+      authors,
+      tags,
     });
   },
 
   update: async function (req, res) {
-    const { title, content } = req.body;
+    const { title, content, author, tags } = req.body;
     const image = req.file;
+
+    const newTags = tags.split(",").map((element) => {
+      return { id: Number(element) };
+    });
 
     if (image) {
       const post = await prisma.post.update({
@@ -65,6 +103,14 @@ const postController = {
           title: title,
           content: content,
           image: image.path,
+          author: {
+            connect: {
+              id: Number(author),
+            },
+          },
+          tags: {
+            connect: newTags,
+          },
         },
       });
       res.redirect(`/posts/${post.id}`);
@@ -76,6 +122,14 @@ const postController = {
         data: {
           title: title,
           content: content,
+          author: {
+            connect: {
+              id: Number(author),
+            },
+          },
+          tags: {
+            connect: newTags,
+          },
         },
       });
       res.redirect(`/posts/${post.id}`);

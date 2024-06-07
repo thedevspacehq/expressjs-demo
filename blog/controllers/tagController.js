@@ -14,6 +14,9 @@ const tagController = {
       where: {
         id: Number(req.params.id),
       },
+      include: {
+        posts: true,
+      },
     });
 
     res.render("tag/show", {

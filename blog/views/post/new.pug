@@ -6,13 +6,40 @@ block meta
 block content
     form(id="newPost") 
         label(for="title") Title: 
+        br
         input(type="text", name="title", id="title")
+        br
+        br
 
         label(for="content") Content:
+        br
         textarea(name="content", cols="30", rows="10", id="content") 
+        br
+        br
 
-        label(for="picture")
-        input(type="file", name="picture", id="picture")
+        label(for="image")
+        br
+        input(type="file", name="image", id="image")
+        br
+        br
+
+        label(for="author") Author: 
+        br
+        select(name="author", id="author", required)
+            option(value="") Please choose an author
+            each author in authors
+                option(value=`${author.id}`) #{author.name}
+        br
+        br
+
+        label(for="tags") Tags: 
+        br
+        select(name="tags", id="tags", multiple, required)
+            option(value="") Please choose tags
+            each tag in tags
+                option(value=`${tag.id}`) #{tag.name}
+        br
+        br
 
         input(type="submit", value="Submit")
 
@@ -21,7 +48,9 @@ block content
             const form = document.getElementById('newPost');
             const titleInput = document.getElementById('title');
             const contentInput = document.getElementById('content');
-            const pictureInput = document.getElementById('picture');
+            const imageInput = document.getElementById('image');
+            const authorInput = document.getElementById('author');
+            const tagsInput = document.getElementById('tags');
 
             const formData = new FormData();
 
@@ -33,8 +62,18 @@ block content
                 formData.set('content', contentInput.value);
             });
 
-            pictureInput.addEventListener('change', function() {
-                formData.set('picture', pictureInput.files[0]);
+            imageInput.addEventListener('change', function() {
+                formData.set('image', imageInput.files[0]);
+            });
+
+            authorInput.addEventListener('change', function() {
+                formData.set('author', authorInput.value);
+            });
+
+            tagsInput.addEventListener('change', function() {
+                const selected = Array.from(tagsInput.selectedOptions).map(({ value }) => value);
+                console.log(selected.toString())
+                formData.set('tags', selected);
             });
 
             form.addEventListener('submit', async function(event) {

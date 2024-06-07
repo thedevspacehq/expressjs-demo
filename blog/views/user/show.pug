@@ -7,4 +7,9 @@ block content
     p #{user.name}
     p #{user.email}
 
+    p Posts by this user: 
+    each post in user.posts
+      li 
+        a(href=`/posts/${post.id}`) #{post.title}
+
     a(href=`/users/edit/${user.id}`) Edit this user
