@@ -72,7 +72,7 @@ block content
 
             tagsInput.addEventListener('change', function() {
                 const selected = Array.from(tagsInput.selectedOptions).map(({ value }) => value);
-                console.log(selected.toString())
+
                 formData.set('tags', selected);
             });
 
