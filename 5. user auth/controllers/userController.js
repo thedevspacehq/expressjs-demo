@@ -56,10 +56,9 @@ const userController = {
     });
 
     if (user.password === password) {
-      console.log(password);
       res
         .cookie("authenticated", true, {
-          expires: new Date(Date.now() + 12 * 30 * 24 * 3600000), // cookie will be removed after 1 year
+          expires: new Date(Date.now() + 12 * 30 * 24 * 3600), // cookie will be removed after 1 year
         })
         .redirect("/users/signin/success");
     } else {
