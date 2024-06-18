@@ -3,8 +3,11 @@ import postRouter from "./routes/post.js";
 import userRouter from "./routes/user.js";
 import tagRouter from "./routes/tag.js";
 import postController from "./controllers/postController.js";
+import cookieParser from "cookie-parser";
+import addLogging from "./middlewares/logging.js";
 
 const app = express();
+app.use(cookieParser());
 const port = 3001;
 
 app.set("views", "./views");
@@ -16,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use("/uploads", express.static("uploads"));
 app.use("/statics", express.static("statics"));
 
-app.get("/", postController.list);
+app.get("/", addLogging, postController.list);
 app.use("/posts", postRouter);
 app.use("/users", userRouter);
 app.use("/tags", tagRouter);

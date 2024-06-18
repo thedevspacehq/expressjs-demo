@@ -1,5 +1,6 @@
 import { Router } from "express";
 import postController from "../controllers/postController.js";
+import isAuthenticated from "../middlewares/auth.js";
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -17,7 +18,7 @@ const postRouter = Router();
 
 postRouter
   .route("/new")
-  .get(postController.new)
+  .get(isAuthenticated, postController.new) // <== Only authenticated users can add new post
   .post(upload.single("image"), postController.create);
 
 postRouter

@@ -29,16 +29,50 @@ const userController = {
   },
 
   create: async function (req, res) {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     const user = await prisma.user.create({
       data: {
         name: name,
         email: email,
+        password: password,
       },
     });
 
     res.redirect(`/users/${user.id}`);
+  },
+
+  signin_form: async function (req, res) {
+    res.render("user/signin/show");
+  },
+
+  signin: async function (req, res) {
+    const { email, password } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: String(email),
+      },
+    });
+
+    if (user.password === password) {
+      console.log(password);
+      res
+        .cookie("authenticated", true, {
+          expires: new Date(Date.now() + 12 * 30 * 24 * 3600000), // cookie will be removed after 1 year
+        })
+        .redirect("/users/signin/success");
+    } else {
+      res.redirect("/users/signin/failure");
+    }
+  },
+
+  success: async function (req, res) {
+    res.render("user/signin/success");
+  },
+
+  failure: async function (req, res) {
+    res.render("user/signin/failure");
   },
 
   edit: async function (req, res) {
