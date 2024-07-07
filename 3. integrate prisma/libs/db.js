@@ -1,5 +1,7 @@
-import sqlite3 from "sqlite3";
+// This file is unnecessary when we are using Prisma.
 
-const db = new sqlite3.Database("./database.sqlite");
+// import sqlite3 from "sqlite3";
 
-export default db;
+// const db = new sqlite3.Database("./database.sqlite");
+
+// export default db;
